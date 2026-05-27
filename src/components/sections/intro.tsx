@@ -51,7 +51,7 @@ export function Intro() {
           </h1>
 
           <p className="intro-reveal font-mono text-[13px] tracking-wide text-fg-muted">
-            UI engineer / product designer / creative developer
+            Automation developer / front-end engineer
           </p>
 
           <div className="intro-reveal pointer-events-auto">

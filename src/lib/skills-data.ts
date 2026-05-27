@@ -10,49 +10,49 @@ export type SkillDatum = {
   tools: string[];
 };
 
-// Three glowing keys (F / L / C), each revealing a role panel on hover or
+// Three glowing keys (F / A / C), each revealing a role panel on hover or
 // physical key press.
 export const GLOW_SKILLS: SkillDatum[] = [
   {
     code: "KeyF",
     key: "F",
-    title: "Front-end Developing",
+    title: "Front-End Development",
     detail:
-      "Production interfaces in React & Next.js — typed, accessible, and fast, considered down to the last frame.",
+      "Production interfaces in React & Next.js — responsive, accessible, and fast, built down to the last interaction.",
     highlights: [
-      "Design systems & reusable component libraries",
-      "Accessibility, semantic HTML & keyboard support",
-      "Performance budgets & Core Web Vitals",
-      "Type-safe data flow end to end",
+      "Reusable component systems with MUI & Tailwind",
+      "Responsive, cross-browser layouts",
+      "State with Redux & modern hooks",
+      "Performance & UX optimization",
     ],
-    tools: ["React", "Next.js", "TypeScript", "Tailwind"],
+    tools: ["React.js", "Next.js", "Redux", "Tailwind"],
   },
   {
-    code: "KeyL",
-    key: "L",
-    title: "LLM Engineering",
+    code: "KeyA",
+    key: "A",
+    title: "Automation & Integration",
     detail:
-      "Building with large language models — from prompt and context design to retrieval and agentic tools.",
+      "Designing scalable, intelligent workflows in n8n — wiring APIs, AI agents, and data sources into systems that run themselves.",
     highlights: [
-      "Prompt & context engineering",
-      "RAG & vector search",
-      "Agentic tool-calling workflows",
-      "Evals, guardrails & monitoring",
+      "Complex n8n workflow design",
+      "AI agents & SERP-driven research",
+      "Web scraping & lead generation",
+      "API integration & MongoDB pipelines",
     ],
-    tools: ["Claude", "Vercel AI SDK", "Python", "Embeddings"],
+    tools: ["n8n", "AI Agents", "SERP API", "MongoDB"],
   },
   {
     code: "KeyC",
     key: "C",
     title: "Creative Development",
     detail:
-      "Interactive 3D and motion on the web — shaders, scroll-driven scenes, and real-time interaction.",
+      "Interactive, motion-rich web — scroll-driven scenes and real-time 3D, like the keyboard you're looking at.",
     highlights: [
       "React Three Fiber & WebGL scenes",
-      "GLSL shaders & post-processing",
-      "Scroll-driven & physics motion",
+      "Scroll-driven motion & interaction",
+      "Framer Motion & GSAP animation",
       "Real-time pointer interaction",
     ],
-    tools: ["Three.js", "R3F", "GLSL", "Spline"],
+    tools: ["Three.js", "R3F", "Framer Motion", "GSAP"],
   },
 ];

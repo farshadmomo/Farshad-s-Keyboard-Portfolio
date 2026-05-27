@@ -4,13 +4,13 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Alex Parker — UI Engineer & Product Designer",
+  title: "Farshad Momtaz — Automation Developer & Front-End Engineer",
   description:
-    "Portfolio of Alex Parker — UI engineer, product designer, and creative developer designing thoughtful digital systems.",
+    "Portfolio of Farshad Momtaz — automation developer and front-end engineer designing scalable n8n workflows and thoughtful React interfaces.",
   openGraph: {
-    title: "Alex Parker — UI Engineer & Product Designer",
+    title: "Farshad Momtaz — Automation Developer & Front-End Engineer",
     description:
-      "Designing thoughtful digital systems. UI engineer / product designer / creative developer.",
+      "Designing thoughtful digital systems. Automation developer / front-end engineer.",
     images: ["/og.png"],
   },
 };

@@ -5,12 +5,12 @@ export function Nav() {
         href="#"
         className="font-mono text-[13px] tracking-wide text-fg"
       >
-        /ALEX PARKER
+        /FARSHAD MOMTAZ
       </a>
 
       <div className="flex items-center gap-8">
         <ul className="flex items-center gap-7">
-          {["Work", "About", "Notes"].map((item) => (
+          {["Skills", "Work", "Contact"].map((item) => (
             <li key={item}>
               <a
                 href={`#${item.toLowerCase()}`}

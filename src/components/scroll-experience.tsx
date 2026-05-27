@@ -7,7 +7,9 @@ import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { SharedKeyboard } from "@/components/three/shared-keyboard";
 import { Intro } from "@/components/sections/intro";
 import { Skills } from "@/components/sections/skills";
-import { MobileHero, MobileSkills } from "@/components/mobile-experience";
+import { Work } from "@/components/sections/work";
+import { Contact } from "@/components/sections/contact";
+import { MobileHero, MobileSkills, MobileWork, MobileContact } from "@/components/mobile-experience";
 import { GLOW_SKILLS } from "@/lib/skills-data";
 import { useDeviceTier } from "@/lib/use-device-tier";
 
@@ -70,9 +72,10 @@ export function ScrollExperience() {
           camera={{ position: [0, 0.5, 5], fov: 35 }}
         >
           <Lights />
-          {/* 3 pages: half to rotate the board into the skills pose (then it
-              stops), half to lift it up while the skills DOM scrolls in below. */}
-          <ScrollControls pages={3} damping={0.2}>
+          {/* 5 pages: rotate the board into the skills pose, lift it up, then
+              the Skills + Work + Contact DOM scroll past beneath the settled
+              keyboard. */}
+          <ScrollControls pages={5} damping={0.2}>
             <ConnectPointerEvents />
             <Suspense fallback={null}>
               <SharedKeyboard glowSkills={GLOW_SKILLS} mobile />
@@ -84,6 +87,12 @@ export function ScrollExperience() {
               </div>
               <div style={{ position: "absolute", top: "200vh", left: 0, width: "100vw" }}>
                 <MobileSkills />
+              </div>
+              <div style={{ position: "absolute", top: "300vh", left: 0, width: "100vw" }}>
+                <MobileWork />
+              </div>
+              <div style={{ position: "absolute", top: "400vh", left: 0, width: "100vw" }}>
+                <MobileContact />
               </div>
             </Scroll>
           </ScrollControls>
@@ -111,20 +120,30 @@ export function ScrollExperience() {
       >
         <Lights />
 
-        <ScrollControls pages={2} damping={0.2}>
+        {/* 5 pages: hero → skills → a one-page HOLD at skills (the pause) →
+            work → contact. The hold lives between skills (100vh) and work
+            (300vh); the keyboard pins to the skills pose across it, then sinks
+            out of frame over the contact page (see shared-keyboard). */}
+        <ScrollControls pages={5} damping={0.2}>
           <ConnectPointerEvents />
           <Suspense fallback={null}>
             <SharedKeyboard glowSkills={GLOW_SKILLS} />
           </Suspense>
 
           {/* pointer-events:none lets hover/clicks fall through to the keyboard
-              behind; interactive bits (e.g. the View Work button) re-enable it. */}
+              behind; interactive bits (buttons, project cards) re-enable it. */}
           <Scroll html style={{ pointerEvents: "none" }}>
             <div style={{ position: "absolute", top: 0, left: 0, width: "100vw", height: "100vh" }}>
               <Intro />
             </div>
             <div style={{ position: "absolute", top: "100vh", left: 0, width: "100vw", height: "100vh" }}>
               <Skills />
+            </div>
+            <div style={{ position: "absolute", top: "300vh", left: 0, width: "100vw", height: "100vh" }}>
+              <Work />
+            </div>
+            <div style={{ position: "absolute", top: "400vh", left: 0, width: "100vw", height: "100vh" }}>
+              <Contact />
             </div>
           </Scroll>
         </ScrollControls>

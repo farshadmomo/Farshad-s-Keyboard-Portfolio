@@ -1,12 +1,12 @@
 export const SKILL_LISTS: { label: string; items: string[] }[] = [
-  { label: "Languages", items: ["TypeScript", "JavaScript", "HTML & CSS", "GLSL", "Python"] },
-  { label: "Frameworks", items: ["React", "Next.js", "Three.js", "R3F", "Tailwind"] },
-  { label: "Tools", items: ["Figma", "Spline", "Blender", "Git", "Vercel"] },
-  { label: "Roles", items: ["UI Engineering", "Product Design", "Creative Dev", "Design Systems"] },
+  { label: "Front-End", items: ["React.js", "Next.js", "Redux", "JavaScript (ES6+)", "HTML5 & CSS3"] },
+  { label: "Automation", items: ["n8n", "AI Agents", "Web Scraping", "SERP API", "API Integration"] },
+  { label: "Backend & Data", items: ["Node.js", "MongoDB", "Oracle", "Google Sheets"] },
+  { label: "Tools", items: ["Git & GitHub", "Docker", "Kubernetes", "MUI", "Tailwind CSS"] },
 ];
 
 // Desktop/tablet skills section is intentionally (near) empty DOM: the skills
-// info now lives only in the hover panels over the glowing F/C/L keys. The
+// info now lives only in the hover panels over the glowing F/A/C keys. The
 // section keeps its #skills anchor + 02 label and a hover hint; the keyboard
 // (behind, in the canvas) carries the content. Mobile uses SKILL_LISTS via
 // mobile-experience instead.
@@ -20,10 +20,6 @@ export function Skills() {
           <span className="text-fg-muted">Skills</span>
         </div>
       </div>
-
-      <p className="absolute bottom-8 left-8 font-mono text-[11px] uppercase tracking-[0.15em] text-fg-dim">
-        Hover the glowing keys
-      </p>
     </div>
   );
 }

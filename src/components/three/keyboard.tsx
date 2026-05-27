@@ -204,7 +204,7 @@ export function Keyboard({
       mat.color = new THREE.Color(color);
       // Fully matte caps: roughness 1 + zero metalness = no specular hotspot at
       // all, so scene lights can't make a cap read like the emissive glow keys.
-      // Glow is driven by emissive (not reflected light), so F/C/L still light up.
+      // Glow is driven by emissive (not reflected light), so F/A/C still light up.
       mat.roughness = 1;
       mat.metalness = 0;
       // Glow keys carry an orange emissive at intensity 0; glowProgress ramps it.
@@ -287,8 +287,20 @@ export function Keyboard({
 
   useEffect(() => {
     if (!interactive) return;
-    const down = (e: KeyboardEvent) => pressed.current.add(e.code);
-    const up = (e: KeyboardEvent) => pressed.current.delete(e.code);
+    const wp = new THREE.Vector3();
+    const down = (e: KeyboardEvent) => {
+      pressed.current.add(e.code);
+      // Physically pressing a glow key reveals its panel too — anchored to the
+      // key's world position (no pointer event, so derive the point ourselves).
+      if (glowSet.has(e.code)) {
+        const entry = keys.find((k) => k.code === e.code);
+        reportGlow(e.code, entry ? entry.node.getWorldPosition(wp).clone() : null);
+      }
+    };
+    const up = (e: KeyboardEvent) => {
+      pressed.current.delete(e.code);
+      if (glowSet.has(e.code)) reportGlow(null, null);
+    };
     // Alt+Tab (or any focus loss) steals the keyup, so the key would stay stuck
     // down — clear everything when the window loses focus.
     const clear = () => pressed.current.clear();
@@ -300,6 +312,7 @@ export function Keyboard({
       window.removeEventListener("keyup", up);
       window.removeEventListener("blur", clear);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [interactive]);
 
   useFrame((_, dt) => {
