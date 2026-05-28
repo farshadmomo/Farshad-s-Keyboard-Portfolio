@@ -4,14 +4,76 @@ import { Suspense, useEffect } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { Scroll, ScrollControls, useScroll } from "@react-three/drei";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { SharedKeyboard } from "@/components/three/shared-keyboard";
+import { SharedKeyboard, MobileKeyboard } from "@/components/three/shared-keyboard";
 import { Intro } from "@/components/sections/intro";
 import { Skills } from "@/components/sections/skills";
 import { Work } from "@/components/sections/work";
+import { Experience } from "@/components/sections/experience";
 import { Contact } from "@/components/sections/contact";
-import { MobileHero, MobileSkills, MobileWork, MobileContact } from "@/components/mobile-experience";
+import {
+  MobileHero,
+  MobileSkills,
+  MobileWork,
+  MobileExperience,
+  MobileContact,
+} from "@/components/mobile-experience";
 import { GLOW_SKILLS } from "@/lib/skills-data";
 import { useDeviceTier } from "@/lib/use-device-tier";
+import { registerNavScroll } from "@/lib/nav-scroll";
+
+// Section → normalized scroll offset (0–1). drei normalizes offset by
+// (scrollHeight − viewport): with 6 pages the divisor is 5, so a DOM block at
+// top:k·100vh maps to k/5. Desktop & mobile place Skills differently.
+const DESKTOP_OFFSETS: Record<string, number> = {
+  intro: 0,
+  skills: 0.2,
+  work: 0.6,
+  experience: 0.8,
+  contact: 1,
+};
+// Mobile uses native scroll (not ScrollControls), so nav jumps to the DOM
+// section by id with native smooth scrollIntoView.
+const MOBILE_SECTION_IDS: Record<string, string> = {
+  skills: "mskills",
+  work: "mwork",
+  experience: "mexperience",
+  contact: "mcontact",
+};
+
+// Registers a nav handler that smooth-scrolls scroll.el to a section's offset.
+// Native smooth scroll moves the element; ScrollControls tracks it and damps the
+// 3D toward the new position. Must live inside <ScrollControls> to read scroll.el.
+function RegisterNavScroll({ offsets }: { offsets: Record<string, number> }) {
+  const scroll = useScroll();
+  useEffect(() => {
+    registerNavScroll((id) => {
+      const offset = offsets[id];
+      if (offset == null) return;
+      const el = scroll.el;
+      const max = el.scrollHeight - el.clientHeight;
+      el.scrollTo({ top: offset * max, behavior: "smooth" });
+    });
+    return () => registerNavScroll(null);
+  }, [offsets, scroll]);
+  return null;
+}
+
+// Mobile nav: native smooth scroll to the DOM section (no ScrollControls).
+function RegisterMobileNav() {
+  useEffect(() => {
+    registerNavScroll((id) => {
+      if (id === "intro") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      document
+        .getElementById(MOBILE_SECTION_IDS[id])
+        ?.scrollIntoView({ behavior: "smooth" });
+    });
+    return () => registerNavScroll(null);
+  }, []);
+  return null;
+}
 
 // One persistent keyboard zooms across the hero → skills scroll. ScrollControls
 // owns the scroll (Lenis removed); the keyboard reads useScroll, the DOM
@@ -64,40 +126,38 @@ export function ScrollExperience() {
   if (tier === null) return null;
 
   if (tier === "mobile") {
+    // Native document scroll (no ScrollControls): the keyboard sits in a fixed
+    // canvas behind the content and rotates on window.scrollY, then lifts away.
+    // The DOM sections flow normally below, so long content can't overlap.
     return (
-      <div className="fixed inset-0">
-        <Canvas
-          dpr={1}
-          gl={{ antialias: true, alpha: true }}
-          camera={{ position: [0, 0.5, 5], fov: 35 }}
-        >
-          <Lights />
-          {/* 5 pages: rotate the board into the skills pose, lift it up, then
-              the Skills + Work + Contact DOM scroll past beneath the settled
-              keyboard. */}
-          <ScrollControls pages={5} damping={0.2}>
-            <ConnectPointerEvents />
+      <>
+        <div className="pointer-events-none fixed inset-0 z-0">
+          <Canvas
+            dpr={1}
+            gl={{ antialias: true, alpha: true }}
+            camera={{ position: [0, 0.5, 5], fov: 35 }}
+          >
+            <Lights />
             <Suspense fallback={null}>
-              <SharedKeyboard glowSkills={GLOW_SKILLS} mobile />
+              <MobileKeyboard glowSkills={GLOW_SKILLS} />
             </Suspense>
+          </Canvas>
+        </div>
 
-            <Scroll html style={{ pointerEvents: "none" }}>
-              <div style={{ position: "absolute", top: 0, left: 0, width: "100vw", height: "100vh" }}>
-                <MobileHero />
-              </div>
-              <div style={{ position: "absolute", top: "200vh", left: 0, width: "100vw" }}>
-                <MobileSkills />
-              </div>
-              <div style={{ position: "absolute", top: "300vh", left: 0, width: "100vw" }}>
-                <MobileWork />
-              </div>
-              <div style={{ position: "absolute", top: "400vh", left: 0, width: "100vw" }}>
-                <MobileContact />
-              </div>
-            </Scroll>
-          </ScrollControls>
-        </Canvas>
-      </div>
+        <RegisterMobileNav />
+
+        {/* Transparent content in normal flow over the fixed keyboard canvas;
+            the board animates pose-by-pose behind it as a backdrop. */}
+        <div className="relative z-10">
+          <section className="relative h-[100svh]">
+            <MobileHero />
+          </section>
+          <MobileSkills />
+          <MobileWork />
+          <MobileExperience />
+          <MobileContact />
+        </div>
+      </>
     );
   }
 
@@ -120,12 +180,13 @@ export function ScrollExperience() {
       >
         <Lights />
 
-        {/* 5 pages: hero → skills → a one-page HOLD at skills (the pause) →
-            work → contact. The hold lives between skills (100vh) and work
-            (300vh); the keyboard pins to the skills pose across it, then sinks
-            out of frame over the contact page (see shared-keyboard). */}
-        <ScrollControls pages={5} damping={0.2}>
+        {/* 6 pages: hero → skills → a one-page HOLD at skills (the pause) →
+            work → experience (both share the low keyboard pose) → contact. The
+            keyboard shrinks into the bottom-right corner over the contact page
+            and buzzes there (see shared-keyboard). */}
+        <ScrollControls pages={6} damping={0.3}>
           <ConnectPointerEvents />
+          <RegisterNavScroll offsets={DESKTOP_OFFSETS} />
           <Suspense fallback={null}>
             <SharedKeyboard glowSkills={GLOW_SKILLS} />
           </Suspense>
@@ -143,6 +204,9 @@ export function ScrollExperience() {
               <Work />
             </div>
             <div style={{ position: "absolute", top: "400vh", left: 0, width: "100vw", height: "100vh" }}>
+              <Experience />
+            </div>
+            <div style={{ position: "absolute", top: "500vh", left: 0, width: "100vw", height: "100vh" }}>
               <Contact />
             </div>
           </Scroll>

@@ -1,4 +1,5 @@
 import { SectionLabel } from "@/components/ui/section-label";
+import { Footer } from "@/components/footer";
 
 type Social = { label: string; handle: string; href: string };
 
@@ -41,10 +42,10 @@ function Arrow() {
 // this page (see shared-keyboard CONTACT pose) so the terminal block reads clean.
 export function Contact() {
   return (
-    <div id="contact" className="relative h-full w-full overflow-hidden">
-      <div className="mx-auto flex h-full max-w-[1280px] flex-col justify-center gap-10 px-8">
+    <div id="contact" className="relative flex h-full w-full flex-col overflow-hidden">
+      <div className="mx-auto flex w-full max-w-[1280px] flex-1 flex-col justify-center gap-10 px-8">
         <div className="flex flex-col gap-4">
-          <SectionLabel index="04" label="Contact" />
+          <SectionLabel index="05" label="Contact" />
           <h2 className="font-sans text-[36px] font-normal leading-[1.0] tracking-[-0.02em] text-fg sm:text-[48px]">
             Let&rsquo;s build something good
           </h2>
@@ -52,7 +53,7 @@ export function Contact() {
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.4fr_1fr]">
           {/* Terminal window */}
-          <div className="border border-border bg-bg-elev/70 backdrop-blur-sm">
+          <div className="border border-border bg-bg-elev/70 backdrop-blur-md">
             <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
               <span className="size-2 rounded-full bg-fg-dim/50" aria-hidden />
               <span className="size-2 rounded-full bg-fg-dim/50" aria-hidden />
@@ -79,8 +80,8 @@ export function Contact() {
             </div>
           </div>
 
-          {/* Social links */}
-          <div className="flex flex-col">
+          {/* Social links — glass panel matching the terminal/work cards */}
+          <div className="flex flex-col border border-border bg-bg-elev/70 p-5 backdrop-blur-md">
             <span className="mb-4 font-mono text-[11px] uppercase tracking-[0.15em] text-fg-dim">
               Elsewhere
             </span>
@@ -105,12 +106,12 @@ export function Contact() {
                 </li>
               ))}
             </ul>
-
-            <p className="mt-auto pt-8 font-mono text-[10px] uppercase tracking-[0.15em] text-fg-dim">
-              © 2026 Farshad Momtaz — Built with Next.js + R3F
-            </p>
           </div>
         </div>
+      </div>
+
+      <div className="mx-auto w-full max-w-[1280px] px-8 pb-6">
+        <Footer />
       </div>
     </div>
   );

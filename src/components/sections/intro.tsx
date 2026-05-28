@@ -62,7 +62,7 @@ export function Intro() {
 
       {/* Vertical section indicator */}
       <div className="absolute bottom-8 left-8 z-20 flex flex-col gap-1 font-mono text-[10px] tracking-[0.2em]">
-        {["01", "02", "03", "04"].map((n) => (
+        {["01", "02", "03", "04", "05"].map((n) => (
           <span key={n} className={n === "01" ? "text-accent" : "text-fg-dim"}>
             {n}
           </span>
