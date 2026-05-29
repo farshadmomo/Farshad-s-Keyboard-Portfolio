@@ -13,7 +13,7 @@ const archivoBlack = Archivo_Black({
 });
 
 export const metadata: Metadata = {
-  title: "Farshad Momtaz — Automation Developer & Front-End Engineer",
+  title: "Farshad Momtaz",
   description:
     "Portfolio of Farshad Momtaz — automation developer and front-end engineer designing scalable n8n workflows and thoughtful React interfaces.",
   openGraph: {
