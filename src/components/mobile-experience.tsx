@@ -19,11 +19,11 @@ export function MobileHero() {
   return (
     <div className="absolute inset-x-0 bottom-0 flex flex-col gap-5 px-6 pb-12">
       <SectionLabel index="01" label="Intro" />
-      <h1 className="font-sans text-[36px] font-normal leading-[0.95] tracking-[-0.02em] text-fg">
-        Designing thoughtful digital systems
+      <h1 className="text-balance font-archivo text-[clamp(2.25rem,11vw,3rem)] leading-[0.95] tracking-[-0.03em] text-fg">
+        Designing <span className="text-accent">thoughtful</span> digital systems
       </h1>
-      <p className="font-mono text-[12px] tracking-wide text-fg-muted">
-        Automation developer / front-end engineer
+      <p className="font-mono text-[12px] uppercase tracking-[0.12em] text-fg-muted">
+        Automation developer <span className="text-accent">/</span> front-end engineer
       </p>
       <div className="pointer-events-auto">
         <Button href="#mskills">View Work</Button>
@@ -37,8 +37,8 @@ export function MobileSkills() {
   return (
     <div id="mskills" className="flex min-h-[100svh] flex-col gap-8 px-6 pb-24 pt-24">
       <SectionLabel index="02" label="Skills" />
-      <h2 className="font-sans text-[30px] font-normal leading-[1.0] tracking-[-0.02em] text-fg">
-        Engineering elegant experiences
+      <h2 className="text-balance font-archivo text-[clamp(1.9rem,8vw,2.5rem)] leading-[1.0] tracking-[-0.03em] text-fg">
+        Engineering <span className="text-accent">elegant</span> experiences
       </h2>
 
       <div className="flex flex-col gap-3">
@@ -104,8 +104,8 @@ export function MobileContact() {
   return (
     <div id="mcontact" className="flex min-h-[100svh] flex-col gap-8 px-6 pb-24 pt-24">
       <SectionLabel index="05" label="Contact" />
-      <h2 className="font-sans text-[30px] font-normal leading-[1.0] tracking-[-0.02em] text-fg">
-        Let&rsquo;s build something good
+      <h2 className="text-balance font-archivo text-[clamp(1.9rem,8vw,2.5rem)] leading-[1.0] tracking-[-0.03em] text-fg">
+        Let&rsquo;s build something <span className="text-accent">good</span>
       </h2>
 
       <div className="border border-border bg-bg-elev/60">
@@ -159,8 +159,8 @@ export function MobileExperience() {
   return (
     <div id="mexperience" className="flex min-h-[100svh] flex-col gap-8 px-6 pb-24 pt-24">
       <SectionLabel index="04" label="Experience" />
-      <h2 className="font-sans text-[30px] font-normal leading-[1.0] tracking-[-0.02em] text-fg">
-        Where I&rsquo;ve worked
+      <h2 className="text-balance font-archivo text-[clamp(1.9rem,8vw,2.5rem)] leading-[1.0] tracking-[-0.03em] text-fg">
+        Where I&rsquo;ve <span className="text-accent">worked</span>
       </h2>
 
       <div className="flex flex-col gap-3">
@@ -177,7 +177,7 @@ export function MobileExperience() {
                 {org}
               </span>
             </div>
-            <h3 className="font-sans text-[16px] font-medium text-fg">{role}</h3>
+            <h3 className="font-sans text-[16px] font-semibold tracking-[-0.01em] text-fg">{role}</h3>
             <ul className="flex flex-col gap-1.5">
               {points.map((p) => (
                 <li
@@ -201,8 +201,8 @@ export function MobileWork() {
   return (
     <div id="mwork" className="flex min-h-[100svh] flex-col gap-8 px-6 pb-24 pt-24">
       <SectionLabel index="03" label="Work" />
-      <h2 className="font-sans text-[30px] font-normal leading-[1.0] tracking-[-0.02em] text-fg">
-        Selected projects
+      <h2 className="text-balance font-archivo text-[clamp(1.9rem,8vw,2.5rem)] leading-[1.0] tracking-[-0.03em] text-fg">
+        Selected <span className="text-accent">projects</span>
       </h2>
 
       <div className="flex flex-col gap-4">

@@ -1,3 +1,5 @@
+import { SectionLabel } from "@/components/ui/section-label";
+
 export const SKILL_LISTS: { label: string; items: string[] }[] = [
   { label: "Front-End", items: ["React.js", "Next.js", "Redux", "JavaScript (ES6+)", "HTML5 & CSS3"] },
   { label: "Automation", items: ["n8n", "AI Agents", "Web Scraping", "SERP API", "API Integration"] },
@@ -14,11 +16,7 @@ export function Skills() {
   return (
     <div id="skills" className="relative h-full w-full overflow-hidden">
       <div className="absolute left-8 top-24">
-        <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.15em]">
-          <span className="text-accent">02</span>
-          <span aria-hidden className="text-fg-dim">———————</span>
-          <span className="text-fg-muted">Skills</span>
-        </div>
+        <SectionLabel index="02" label="Skills" />
       </div>
     </div>
   );

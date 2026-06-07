@@ -102,13 +102,13 @@ function ProjectCard({ n, title, category, year, blurb, tags, href }: Project) {
       {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
       className="group pointer-events-auto flex flex-col gap-2.5 border border-border bg-bg-elev/70 p-5 backdrop-blur-sm transition-colors duration-200 hover:border-accent/60 hover:bg-bg-elev/90"
     >
-      <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.15em]">
+      <div className="flex items-center justify-between font-mono text-[11px] uppercase tabular-nums tracking-[0.15em]">
         <span className="text-accent">{n}</span>
         <span className="text-fg-dim">{year}</span>
       </div>
 
       <div className="mt-1 flex items-start justify-between gap-3">
-        <h3 className="font-sans text-[18px] font-medium leading-tight text-fg">
+        <h3 className="font-sans text-[19px] font-semibold leading-tight tracking-[-0.01em] text-fg">
           {title}
         </h3>
         <Arrow />
@@ -144,8 +144,8 @@ export function Work() {
         <div className="flex items-end justify-between gap-6">
           <div className="flex flex-col gap-4">
             <SectionLabel index="03" label="Work" />
-            <h2 className="font-sans text-[36px] font-normal leading-[1.0] tracking-[-0.02em] text-fg sm:text-[48px]">
-              Selected projects
+            <h2 className="text-balance font-archivo text-[clamp(1.9rem,4.5vw,3.25rem)] leading-[0.95] tracking-[-0.03em] text-fg">
+              Selected <span className="text-accent">projects</span>
             </h2>
           </div>
           <p className="hidden font-mono text-[11px] uppercase tracking-[0.15em] text-fg-dim md:block">

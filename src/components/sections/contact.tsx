@@ -46,8 +46,8 @@ export function Contact() {
       <div className="mx-auto flex w-full max-w-[1280px] flex-1 flex-col justify-center gap-10 px-8">
         <div className="flex flex-col gap-4">
           <SectionLabel index="05" label="Contact" />
-          <h2 className="font-sans text-[36px] font-normal leading-[1.0] tracking-[-0.02em] text-fg sm:text-[48px]">
-            Let&rsquo;s build something good
+          <h2 className="text-balance font-archivo text-[clamp(1.9rem,4.5vw,3.25rem)] leading-[0.95] tracking-[-0.03em] text-fg">
+            Let&rsquo;s build something <span className="text-accent">good</span>
           </h2>
         </div>
 

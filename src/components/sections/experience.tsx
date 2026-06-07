@@ -62,8 +62,8 @@ export function Experience() {
       <div className="mx-auto flex h-full max-w-[1280px] flex-col justify-center gap-8 px-8">
         <div className="flex flex-col gap-4">
           <SectionLabel index="04" label="Experience" />
-          <h2 className="font-sans text-[36px] font-normal leading-[1.0] tracking-[-0.02em] text-fg sm:text-[48px]">
-            Where I&rsquo;ve worked
+          <h2 className="text-balance font-archivo text-[clamp(1.9rem,4.5vw,3.25rem)] leading-[0.95] tracking-[-0.03em] text-fg">
+            Where I&rsquo;ve <span className="text-accent">worked</span>
           </h2>
         </div>
 
@@ -74,7 +74,7 @@ export function Experience() {
               className="grid grid-cols-1 gap-2 border border-border bg-bg-elev/70 p-4 backdrop-blur-md transition-colors duration-200 hover:border-accent/40 md:grid-cols-[170px_1fr] md:gap-6"
             >
               <div className="flex flex-col gap-1">
-                <span className="font-mono text-[11px] uppercase tracking-[0.15em] text-accent">
+                <span className="font-mono text-[11px] uppercase tabular-nums tracking-[0.15em] text-accent">
                   {period}
                 </span>
                 <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-dim">
@@ -83,7 +83,7 @@ export function Experience() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <h3 className="font-sans text-[18px] font-medium leading-tight text-fg">
+                <h3 className="font-sans text-[19px] font-semibold leading-tight tracking-[-0.01em] text-fg">
                   {role}
                 </h3>
                 <ul className="flex flex-col gap-1.5">

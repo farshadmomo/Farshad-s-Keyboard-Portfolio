@@ -41,17 +41,19 @@ export function Intro() {
       </div>
 
       <div className="mx-auto flex h-full max-w-[1280px] items-center px-8">
-        <div className="flex max-w-[46%] flex-col items-start gap-7">
+        <div className="flex max-w-[48%] flex-col items-start gap-7">
           <div className="intro-reveal">
             <SectionLabel index="01" label="Intro" />
           </div>
 
-          <h1 className="intro-reveal font-sans text-[40px] font-normal leading-[0.95] tracking-[-0.02em] text-fg sm:text-[64px] lg:text-[88px]">
-            Designing thoughtful digital systems
+          <h1 className="intro-reveal text-balance font-archivo text-[clamp(2.5rem,6.5vw,5.5rem)] leading-[0.92] tracking-[-0.03em] text-fg">
+            Designing <span className="text-accent">thoughtful</span> digital
+            systems
           </h1>
 
-          <p className="intro-reveal font-mono text-[13px] tracking-wide text-fg-muted">
-            Automation developer / front-end engineer
+          <p className="intro-reveal font-mono text-[13px] uppercase tracking-[0.12em] text-fg-muted">
+            Automation developer <span className="text-accent">/</span> front-end
+            engineer
           </p>
 
           <div className="intro-reveal pointer-events-auto">
