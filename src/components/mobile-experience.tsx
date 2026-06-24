@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SKILL_LISTS } from "@/components/sections/skills";
 import { PROJECTS } from "@/components/sections/work";
 import { EXPERIENCE } from "@/components/sections/experience";
+import { CERTIFICATES } from "@/components/sections/certificates";
 import { GLOW_SKILLS } from "@/lib/skills-data";
 import { Footer } from "@/components/footer";
 
@@ -103,7 +104,7 @@ const MOBILE_TERMINAL: { cmd: string; out: string }[] = [
 export function MobileContact() {
   return (
     <div id="mcontact" className="flex min-h-[100svh] flex-col gap-8 px-6 pb-24 pt-24">
-      <SectionLabel index="05" label="Contact" />
+      <SectionLabel index="06" label="Contact" />
       <h2 className="text-balance font-archivo text-[clamp(1.9rem,8vw,2.5rem)] leading-[1.0] tracking-[-0.03em] text-fg">
         Let&rsquo;s build something <span className="text-accent">good</span>
       </h2>
@@ -196,7 +197,8 @@ export function MobileExperience() {
   );
 }
 
-// Last screen: the project list.
+// Work screen: project list. Live-site projects show a static cover screenshot
+// (no hover on touch); automation projects keep the text card.
 export function MobileWork() {
   return (
     <div id="mwork" className="flex min-h-[100svh] flex-col gap-8 px-6 pb-24 pt-24">
@@ -211,27 +213,78 @@ export function MobileWork() {
             key={p.n}
             href={p.href}
             {...(p.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
-            className="pointer-events-auto flex flex-col gap-2 border border-border bg-bg-elev/70 p-4 backdrop-blur-md"
+            className="pointer-events-auto flex flex-col border border-border bg-bg-elev/70 backdrop-blur-md"
           >
-            <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.15em]">
-              <span className="text-accent">{p.n}</span>
-              <span className="text-fg-dim">{p.year}</span>
+            {p.images && (
+              <div className="relative aspect-[16/10] overflow-hidden border-b border-border">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={p.images[0]}
+                  alt={`${p.title} — screenshot`}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover object-top"
+                />
+              </div>
+            )}
+            <div className="flex flex-col gap-2 p-4">
+              <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.15em]">
+                <span className="text-accent">{p.n}</span>
+                <span className="text-fg-dim">{p.year}</span>
+              </div>
+              <h3 className="font-sans text-[17px] font-medium text-fg">{p.title}</h3>
+              <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-muted">
+                {p.category}
+              </p>
+              <p className="font-sans text-[13px] leading-relaxed text-fg-muted">{p.blurb}</p>
+              <div className="mt-1 flex flex-wrap gap-1.5">
+                {p.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="border border-border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-fg-dim"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
-            <h3 className="font-sans text-[17px] font-medium text-fg">{p.title}</h3>
-            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-muted">
-              {p.category}
-            </p>
-            <p className="font-sans text-[13px] leading-relaxed text-fg-muted">{p.blurb}</p>
-            <div className="mt-1 flex flex-wrap gap-1.5">
-              {p.tags.map((t) => (
-                <span
-                  key={t}
-                  className="border border-border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-fg-dim"
-                >
-                  {t}
-                </span>
-              ))}
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Certificates screen: stacked Anthropic Claude certificate images, each linking
+// to its PDF.
+export function MobileCertificates() {
+  return (
+    <div id="mcertificates" className="flex min-h-[100svh] flex-col gap-8 px-6 pb-24 pt-24">
+      <SectionLabel index="05" label="Certificates" />
+      <h2 className="text-balance font-archivo text-[clamp(1.9rem,8vw,2.5rem)] leading-[1.0] tracking-[-0.03em] text-fg">
+        Certified by <span className="text-accent">Anthropic</span>
+      </h2>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {CERTIFICATES.map((c) => (
+          <a
+            key={c.title}
+            href={c.pdf}
+            target="_blank"
+            rel="noreferrer"
+            className="pointer-events-auto flex flex-col overflow-hidden border border-border bg-bg-elev/70 backdrop-blur-md"
+          >
+            <div className="relative aspect-[4/3] overflow-hidden border-b border-border">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={c.img}
+                alt={`${c.title} — Anthropic certificate of completion`}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
             </div>
+            <span className="px-4 py-3 font-sans text-[14px] font-medium text-fg">
+              {c.title}
+            </span>
           </a>
         ))}
       </div>

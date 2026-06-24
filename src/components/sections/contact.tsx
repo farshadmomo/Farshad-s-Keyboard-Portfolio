@@ -43,9 +43,9 @@ function Arrow() {
 export function Contact() {
   return (
     <div id="contact" className="relative flex h-full w-full flex-col overflow-hidden">
-      <div className="mx-auto flex w-full max-w-[1280px] flex-1 flex-col justify-center gap-10 px-8">
+      <div className="mx-auto flex w-full max-w-[1280px] flex-1 flex-col justify-center gap-10 px-8 pt-24">
         <div className="flex flex-col gap-4">
-          <SectionLabel index="05" label="Contact" />
+          <SectionLabel index="06" label="Contact" />
           <h2 className="text-balance font-archivo text-[clamp(1.9rem,4.5vw,3.25rem)] leading-[0.95] tracking-[-0.03em] text-fg">
             Let&rsquo;s build something <span className="text-accent">good</span>
           </h2>

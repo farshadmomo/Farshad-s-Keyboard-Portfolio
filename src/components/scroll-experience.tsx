@@ -9,12 +9,14 @@ import { Intro } from "@/components/sections/intro";
 import { Skills } from "@/components/sections/skills";
 import { Work } from "@/components/sections/work";
 import { Experience } from "@/components/sections/experience";
+import { Certificates } from "@/components/sections/certificates";
 import { Contact } from "@/components/sections/contact";
 import {
   MobileHero,
   MobileSkills,
   MobileWork,
   MobileExperience,
+  MobileCertificates,
   MobileContact,
 } from "@/components/mobile-experience";
 import { GLOW_SKILLS } from "@/lib/skills-data";
@@ -22,13 +24,14 @@ import { useDeviceTier } from "@/lib/use-device-tier";
 import { registerNavScroll } from "@/lib/nav-scroll";
 
 // Section → normalized scroll offset (0–1). drei normalizes offset by
-// (scrollHeight − viewport): with 6 pages the divisor is 5, so a DOM block at
-// top:k·100vh maps to k/5. Desktop & mobile place Skills differently.
+// (scrollHeight − viewport): with 7 pages the divisor is 6, so a DOM block at
+// top:k·100vh maps to k/6. Desktop & mobile place Skills differently.
 const DESKTOP_OFFSETS: Record<string, number> = {
   intro: 0,
-  skills: 0.2,
-  work: 0.6,
-  experience: 0.8,
+  skills: 1 / 6,
+  work: 3 / 6,
+  experience: 4 / 6,
+  certificates: 5 / 6,
   contact: 1,
 };
 // Mobile uses native scroll (not ScrollControls), so nav jumps to the DOM
@@ -37,6 +40,7 @@ const MOBILE_SECTION_IDS: Record<string, string> = {
   skills: "mskills",
   work: "mwork",
   experience: "mexperience",
+  certificates: "mcertificates",
   contact: "mcontact",
 };
 
@@ -155,6 +159,7 @@ export function ScrollExperience() {
           <MobileSkills />
           <MobileWork />
           <MobileExperience />
+          <MobileCertificates />
           <MobileContact />
         </div>
       </>
@@ -180,11 +185,11 @@ export function ScrollExperience() {
       >
         <Lights />
 
-        {/* 6 pages: hero → skills → a one-page HOLD at skills (the pause) →
-            work → experience (both share the low keyboard pose) → contact. The
-            keyboard shrinks into the bottom-right corner over the contact page
-            and buzzes there (see shared-keyboard). */}
-        <ScrollControls pages={6} damping={0.3}>
+        {/* 7 pages: hero → skills → a one-page HOLD at skills (the pause) →
+            work → experience → certificates (all three share the low keyboard
+            pose) → contact. The keyboard shrinks into the bottom-right corner
+            over the contact page and buzzes there (see shared-keyboard). */}
+        <ScrollControls pages={7} damping={0.3}>
           <ConnectPointerEvents />
           <RegisterNavScroll offsets={DESKTOP_OFFSETS} />
           <Suspense fallback={null}>
@@ -207,6 +212,9 @@ export function ScrollExperience() {
               <Experience />
             </div>
             <div style={{ position: "absolute", top: "500vh", left: 0, width: "100vw", height: "100vh" }}>
+              <Certificates />
+            </div>
+            <div style={{ position: "absolute", top: "600vh", left: 0, width: "100vw", height: "100vh" }}>
               <Contact />
             </div>
           </Scroll>

@@ -21,7 +21,7 @@ export function Nav() {
         {/* Links overflow a phone width; on mobile the footer carries nav and
             users scroll. Show the link row from md up. */}
         <ul className="hidden items-center gap-7 md:flex">
-          {["Skills", "Work", "Experience", "Contact"].map((item) => (
+          {["Skills", "Work", "Experience", "Certificates", "Contact"].map((item) => (
             <li key={item}>
               <a
                 href={`#${item.toLowerCase()}`}

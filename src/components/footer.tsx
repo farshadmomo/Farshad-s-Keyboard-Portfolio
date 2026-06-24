@@ -2,7 +2,7 @@
 
 import { navigateToSection } from "@/lib/nav-scroll";
 
-const NAV = ["Skills", "Work", "Experience", "Contact"];
+const NAV = ["Skills", "Work", "Experience", "Certificates", "Contact"];
 
 const SOCIALS: { label: string; href: string }[] = [
   { label: "GitHub", href: "https://github.com/farshadmomo" },

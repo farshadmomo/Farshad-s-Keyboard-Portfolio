@@ -74,21 +74,21 @@ const M_SCALES = [
   M_WORK_SCALE,
   M_CONTACT_SCALE,
 ];
-// DOM ids of the scrolling sections, in pose order (index 0 = hero = top = 0).
-const M_SECTION_IDS = ["mskills", "mwork", "mexperience", "mcontact"];
+// DOM ids of the scrolling sections, in document order (index 0 = hero = top = 0).
+const M_SECTION_IDS = ["mskills", "mwork", "mexperience", "mcertificates", "mcontact"];
 
-// Desktop scroll keyframes (offset) across 6 pages. drei normalizes offset by
+// Desktop scroll keyframes (offset) across 7 pages. drei normalizes offset by
 // (scrollHeight − viewport), so with N pages a DOM block at top:k·100vh lands at
-// offset k/(N−1) — here the divisor is 5. The bands:
-//   [0,   0.2] hero → skills        (Skills DOM @100vh = 0.2)
-//   [0.2, 0.4] HOLD at skills       (the requested pause; empty 100vh gap)
-//   [0.4, 0.6] skills → work        (Work DOM @300vh = 0.6)
-//   [0.6, 0.8] HOLD at work         (Work + Experience @400vh=0.8 share the low pose)
-//   [0.8, 1.0] work → contact       (board shrinks into the bottom-right corner; Contact @500vh = 1.0)
-const SKILLS_IN = 0.2;
-const SKILLS_HOLD = 0.4;
-const WORK_IN = 0.6;
-const WORK_HOLD = 0.8;
+// offset k/(N−1) — here the divisor is 6. The bands:
+//   [0,    1/6] hero → skills        (Skills DOM @100vh = 1/6)
+//   [1/6,  2/6] HOLD at skills       (the requested pause; empty 100vh gap)
+//   [2/6,  3/6] skills → work        (Work DOM @300vh = 3/6)
+//   [3/6,  5/6] HOLD at the low pose  (Work @300, Experience @400, Certificates @500 all share it)
+//   [5/6,  1.0] work → contact       (board shrinks into the bottom-right corner; Contact @600vh = 1.0)
+const SKILLS_IN = 1 / 6;
+const SKILLS_HOLD = 2 / 6;
+const WORK_IN = 3 / 6;
+const WORK_HOLD = 5 / 6;
 
 const lerp = THREE.MathUtils.lerp;
 const clamp = THREE.MathUtils.clamp;
@@ -137,8 +137,9 @@ export function SharedKeyboard({ glowSkills }: { glowSkills: SkillDatum[] }) {
     const board = boardRef.current;
     if (!board) return;
 
-    // 6 pages: hero → skills → HOLD (pause) → work → HOLD (work+experience) →
-    // contact (board shrinks into the bottom-right corner and buzzes).
+    // 7 pages: hero → skills → HOLD (pause) → work → HOLD (work+experience+
+    // certificates share the low pose) → contact (board shrinks into the
+    // bottom-right corner and buzzes).
     const o = scroll.offset;
     if (o < SKILLS_IN) {
       const t = smoothstep(clamp(o / SKILLS_IN, 0, 1));
@@ -203,10 +204,10 @@ export function SharedKeyboard({ glowSkills }: { glowSkills: SkillDatum[] }) {
     // panels remain armed while paused), then fades out toward work.
     glowProgress.current =
       o < SKILLS_IN
-        ? smoothstep(clamp((o - (SKILLS_IN - 0.18)) / 0.18, 0, 1))
+        ? smoothstep(clamp((o - (SKILLS_IN - 0.13)) / 0.13, 0, 1))
         : o < SKILLS_HOLD
           ? 1
-          : 1 - smoothstep(clamp((o - SKILLS_HOLD) / 0.18, 0, 1));
+          : 1 - smoothstep(clamp((o - SKILLS_HOLD) / 0.13, 0, 1));
 
     // The "hover the glowing keys" hint rides above the board (anchored in the
     // scene, not the scrolled DOM) and fades in with the glow, so it sits over
@@ -307,8 +308,9 @@ export function MobileKeyboard({ glowSkills }: { glowSkills: SkillDatum[] }) {
   const glowProgress = useRef(0);
   const scrollY = useRef(0);
   const vh = useRef(800);
-  // Absolute document Y of each section top: [hero=0, skills, work, exp, contact].
-  const anchors = useRef<number[]>([0, 1, 2, 3, 4]);
+  // Absolute document Y of each section top:
+  // [hero=0, skills, work, exp, certificates, contact].
+  const anchors = useRef<number[]>([0, 1, 2, 3, 4, 5]);
 
   const emissiveKeys = useMemo(
     () => glowSkills.map((s) => s.code),
@@ -351,7 +353,9 @@ export function MobileKeyboard({ glowSkills }: { glowSkills: SkillDatum[] }) {
     const segs = anchors.current;
     const y = scrollY.current;
     const sSkills = segs[1];
-    const sContact = segs[4];
+    // segs = [hero, mskills, mwork, mexperience, mcertificates, mcontact]; the
+    // low backdrop pose holds across work→experience→certificates until contact.
+    const sContact = segs[5];
     const W = vh.current * 0.85; // transition window (~one screen)
 
     // Lerp the board between two pose keyframes (indices into M_POSES); returns

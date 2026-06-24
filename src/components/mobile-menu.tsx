@@ -11,7 +11,8 @@ const ITEMS: { n: string; label: string; el: string | null }[] = [
   { n: "02", label: "Skills", el: "mskills" },
   { n: "03", label: "Work", el: "mwork" },
   { n: "04", label: "Experience", el: "mexperience" },
-  { n: "05", label: "Contact", el: "mcontact" },
+  { n: "05", label: "Certificates", el: "mcertificates" },
+  { n: "06", label: "Contact", el: "mcontact" },
 ];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
