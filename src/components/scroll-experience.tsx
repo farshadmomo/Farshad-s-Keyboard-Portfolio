@@ -24,14 +24,16 @@ import { useDeviceTier } from "@/lib/use-device-tier";
 import { registerNavScroll } from "@/lib/nav-scroll";
 
 // Section → normalized scroll offset (0–1). drei normalizes offset by
-// (scrollHeight − viewport): with 7 pages the divisor is 6, so a DOM block at
-// top:k·100vh maps to k/6. Desktop & mobile place Skills differently.
+// (scrollHeight − viewport). Experience is a 150vh block (its 5-card timeline
+// scrolls through without clipping), so the slots aren't all 100vh: section
+// tops are 0 / 100 / 300 / 400 / 550 / 650vh and the divisor is the last top
+// (650vh, where Contact lands at offset 1). offset = topVh / 650.
 const DESKTOP_OFFSETS: Record<string, number> = {
   intro: 0,
-  skills: 1 / 6,
-  work: 3 / 6,
-  experience: 4 / 6,
-  certificates: 5 / 6,
+  skills: 100 / 650,
+  work: 300 / 650,
+  experience: 400 / 650,
+  certificates: 550 / 650,
   contact: 1,
 };
 // Mobile uses native scroll (not ScrollControls), so nav jumps to the DOM
@@ -185,11 +187,12 @@ export function ScrollExperience() {
       >
         <Lights />
 
-        {/* 7 pages: hero → skills → a one-page HOLD at skills (the pause) →
-            work → experience → certificates (all three share the low keyboard
-            pose) → contact. The keyboard shrinks into the bottom-right corner
-            over the contact page and buzzes there (see shared-keyboard). */}
-        <ScrollControls pages={7} damping={0.3}>
+        {/* 7.5 pages: hero → skills → a one-page HOLD at skills (the pause) →
+            work → experience (a taller 150vh block so its timeline scrolls
+            through) → certificates (all share the low keyboard pose) → contact.
+            The keyboard shrinks into the bottom-right corner over the contact
+            page and buzzes there (see shared-keyboard). */}
+        <ScrollControls pages={7.5} damping={0.3}>
           <ConnectPointerEvents />
           <RegisterNavScroll offsets={DESKTOP_OFFSETS} />
           <Suspense fallback={null}>
@@ -208,13 +211,13 @@ export function ScrollExperience() {
             <div style={{ position: "absolute", top: "300vh", left: 0, width: "100vw", height: "100vh" }}>
               <Work />
             </div>
-            <div style={{ position: "absolute", top: "400vh", left: 0, width: "100vw", height: "100vh" }}>
+            <div style={{ position: "absolute", top: "400vh", left: 0, width: "100vw", height: "150vh" }}>
               <Experience />
             </div>
-            <div style={{ position: "absolute", top: "500vh", left: 0, width: "100vw", height: "100vh" }}>
+            <div style={{ position: "absolute", top: "550vh", left: 0, width: "100vw", height: "100vh" }}>
               <Certificates />
             </div>
-            <div style={{ position: "absolute", top: "600vh", left: 0, width: "100vw", height: "100vh" }}>
+            <div style={{ position: "absolute", top: "650vh", left: 0, width: "100vw", height: "100vh" }}>
               <Contact />
             </div>
           </Scroll>

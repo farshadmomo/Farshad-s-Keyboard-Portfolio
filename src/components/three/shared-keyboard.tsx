@@ -77,18 +77,18 @@ const M_SCALES = [
 // DOM ids of the scrolling sections, in document order (index 0 = hero = top = 0).
 const M_SECTION_IDS = ["mskills", "mwork", "mexperience", "mcertificates", "mcontact"];
 
-// Desktop scroll keyframes (offset) across 7 pages. drei normalizes offset by
-// (scrollHeight − viewport), so with N pages a DOM block at top:k·100vh lands at
-// offset k/(N−1) — here the divisor is 6. The bands:
-//   [0,    1/6] hero → skills        (Skills DOM @100vh = 1/6)
-//   [1/6,  2/6] HOLD at skills       (the requested pause; empty 100vh gap)
-//   [2/6,  3/6] skills → work        (Work DOM @300vh = 3/6)
-//   [3/6,  5/6] HOLD at the low pose  (Work @300, Experience @400, Certificates @500 all share it)
-//   [5/6,  1.0] work → contact       (board shrinks into the bottom-right corner; Contact @600vh = 1.0)
-const SKILLS_IN = 1 / 6;
-const SKILLS_HOLD = 2 / 6;
-const WORK_IN = 3 / 6;
-const WORK_HOLD = 5 / 6;
+// Desktop scroll keyframes (offset). drei normalizes offset by (scrollHeight −
+// viewport); Experience is a 150vh block, so section tops are 0/100/300/400/
+// 550/650vh and the divisor is 650vh (offset = topVh/650). The bands:
+//   [0,        100/650] hero → skills        (Skills DOM @100vh)
+//   [100/650,  200/650] HOLD at skills       (the requested pause; empty 100vh gap)
+//   [200/650,  300/650] skills → work        (Work DOM @300vh)
+//   [300/650,  550/650] HOLD at the low pose  (Work @300, the tall Experience @400, Certificates @550 share it)
+//   [550/650,  1.0]     work → contact        (board shrinks into the bottom-right corner; Contact @650vh = 1.0)
+const SKILLS_IN = 100 / 650;
+const SKILLS_HOLD = 200 / 650;
+const WORK_IN = 300 / 650;
+const WORK_HOLD = 550 / 650;
 
 const lerp = THREE.MathUtils.lerp;
 const clamp = THREE.MathUtils.clamp;

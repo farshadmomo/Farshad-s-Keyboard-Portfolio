@@ -59,7 +59,7 @@ export const EXPERIENCE: Role[] = [
 export function Experience() {
   return (
     <div id="experience" className="relative h-full w-full overflow-hidden">
-      <div className="mx-auto flex h-full max-w-[1280px] flex-col justify-center gap-8 px-8 pb-12 pt-28">
+      <div className="mx-auto flex h-full max-w-[1280px] flex-col justify-start gap-8 px-8 pb-12 pt-28">
         <div className="flex flex-col gap-4">
           <SectionLabel index="04" label="Experience" />
           <h2 className="text-balance font-archivo text-[clamp(1.9rem,4.5vw,3.25rem)] leading-[0.95] tracking-[-0.03em] text-fg">
